@@ -1,0 +1,27 @@
+{% extends "scheduler/base.html" %}
+{% block title %}{{block.super}}{% endblock %}
+
+{% block content %}
+   {{block.super}}
+   <h2>{{page_title}}</h2>
+   <p>
+   <a id="list_courses_link" href="{% url courses %}">List all courses</a>
+   </p>
+   
+   <p>
+   <a id="create_course_link" href="{% url create_course %}">create new course</a>
+   </p>
+   
+   <p>
+   <a id="list_tasks_link" href="{% url tasks %}"> List all Tasks</a>
+   </p>
+   
+   <p>
+   <a id="create_task_link" href="{% url create_task %}"> create new task</a>
+   </p>
+   
+   <p>
+   <a id="all_pending_tasks_link" href="{% url all_pending_tasks %}"> all pending tasks</a>
+   </p>
+   
+{% endblock %}

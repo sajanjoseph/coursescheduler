@@ -1,0 +1,26 @@
+{% extends "scheduler/base.html" %}
+{% load csfilters %} 
+{% block content %}
+{{block.super }}
+<span class="page_heading">{{page_title}}</span>
+
+
+
+<table >
+
+<tr>   <th> Created By   </th> <td> {{task.author}} </td>  </tr>
+<tr>    <th> Name      </th>   <td> {{ task.name}} </td> </tr>
+<tr>    <th> Course      </th>   <td> {{ task.course}} </td> </tr>
+<tr>   <th> Date of Submission   </th> <td> {{task.submission_date|date:"j F, Y"}} </td>  </tr>
+<tr>    <th> Expected Duration </th>   <td> {{ task.expected_duration|mts_to_hours}} </td> </tr>
+<tr>    <th> Status      </th>   <td> {{ task.status}} </td> </tr>
+{% if  task.closed_date %}
+   <tr>    <th> Closed on     </th>   <td> {{ task.closed_date}} </td> </tr>
+{% endif %}
+</table>
+<p> <a href="{% url edit_task task.id %}"> <img src="{{ MEDIA_URL }}img/edit.png"> Edit Task</a> </p> 
+
+<p> <a href="{% url delete_task task.id %}"> <img src="{{ MEDIA_URL }}img/remove.png"> Delete Task</a> </p>
+
+<class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>    
+{% endblock %}

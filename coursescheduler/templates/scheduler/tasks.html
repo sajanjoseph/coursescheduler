@@ -1,0 +1,54 @@
+{% extends "scheduler/base.html" %}
+{% load humanize %} 
+{% load csfilters %} 
+{% block title %}{{block.super}}{% endblock %}
+
+{% block content %}
+   {{block.super}}
+   <h2>Your {{page_title}}</h2>
+<p> You created {{total}} task{{total|pluralize:",s"}}</p>
+
+{% if pending_tasks %}
+<h2> pending tasks</h2> total:{{pending_tasks|length}} task{{pending_tasks|length|pluralize:",s"}}
+<div class="pending"> 
+   <ul>
+   {% for task in pending_tasks %}
+  
+      <li> 
+      <a href="{% url task_details task.id %}"><b>{{task.name}}</b> </a> 
+      <a href="{% url edit_task task.id  %}"><img src="{{ MEDIA_URL }}img/edit.png" ALT="EDIT"></a> <A href="{% url delete_task task.id  %}"><img src="{{ MEDIA_URL }}img/remove.png" ALT="DELETE"></A>
+      Only {{task.submission_date|naturaltime}}
+      <br>
+        {{task.submission_date}} <br>
+        {{ task.expected_duration|mts_to_hours}} duration <br>
+        {{task.course}}
+        </li>
+   {% endfor %}
+</ul>
+</div>
+{% endif %}
+
+
+{% if finished_tasks %}
+<h2> finished tasks</h2> total:{{finished_tasks|length}} task{{finished_tasks|length|pluralize:",s"}}
+<div class="finished">
+<ul>
+   {% for task in finished_tasks %}
+      <li> 
+      <a href="{% url task_details task.id %}"><b>{{task.name}}</b> </a> 
+      <a href="{% url edit_task task.id  %}"><img src="{{ MEDIA_URL }}img/edit.png" ALT="EDIT"></a> <A href="{% url delete_task task.id  %}"><img src="{{ MEDIA_URL }}img/remove.png" ALT="DELETE"></A>
+      
+      <br>
+        {{task.submission_date}} <br>
+        {{ task.expected_duration|mts_to_hours}} duration <br>
+        {{task.course}}<br>
+        closed on :
+        {{task.closed_date}}
+        </li>
+   {% endfor %}
+</ul>
+</div>
+{% endif %}
+
+<class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>   
+{% endblock %}

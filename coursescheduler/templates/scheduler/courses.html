@@ -1,0 +1,25 @@
+{% extends "scheduler/base.html" %}
+{% block title %}{{block.super}}{% endblock %}
+
+{% block content %}
+   {{block.super}}
+   <h2>Your {{page_title}}</h2>
+   
+   <ul>
+   {% for course in courses %}
+   
+      <li>
+      {% if user == course.creator %}
+       <a href="{% url edit_course course.id %}"><b>{{course.title}}</b> </a> 
+       <a href="{% url delete_course course.id %}"><img src="{{ MEDIA_URL }}img/remove.png"></a>
+       {% else %}
+       <b>{{course.title}}</b>
+       {% endif %}
+      
+      <br>    {{course.description}}
+      
+      </li>
+   {% endfor %}
+   </ul>
+<class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>   
+{% endblock %}
