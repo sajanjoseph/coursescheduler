@@ -13,6 +13,7 @@
 <tr>    <th> Course      </th>   <td> {{ task.course}} </td> </tr>
 <tr>   <th> Date of Submission   </th> <td> {{task.submission_date|date:"j F, Y"}} </td>  </tr>
 <tr>    <th> Expected Duration </th>   <td> {{ task.expected_duration|mts_to_hours}} </td> </tr>
+<tr>    <th> Completed </th>   <td> {{ task.completed_till_now|mts_to_hours}} </td> </tr>
 <tr>    <th> Status      </th>   <td> {{ task.status}} </td> </tr>
 {% if  task.closed_date %}
    <tr>    <th> Closed on     </th>   <td> {{ task.closed_date}} </td> </tr>

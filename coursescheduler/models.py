@@ -32,6 +32,7 @@ class Task(models.Model):
     author = models.ForeignKey(User)
     status = models.CharField(max_length = 4,choices=status_values ,default = 'PEND')
     expected_duration = models.IntegerField(default=60,help_text='in minutes')
+    completed_till_now = models.IntegerField(default=0,help_text='in minutes')
     closed_date = models.DateTimeField(null=True)
     
     def __unicode__(self):

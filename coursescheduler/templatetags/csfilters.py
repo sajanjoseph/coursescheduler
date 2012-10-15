@@ -27,4 +27,4 @@ def mts_to_hours(minutes_value):
             output = output + str(mts)+ ' minutes'
         return output
     else:
-        return 0
+        return '0'
