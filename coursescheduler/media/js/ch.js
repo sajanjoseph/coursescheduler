@@ -6,4 +6,14 @@ $(document).ready(function(){
 		
 	});
 	
+	$.fn.peity.defaults.pie = {
+			  colours: ["#FF0000", "#008000"],
+			  delimeter: "/",
+			  diameter: 27
+			};
+	
+	$("span.pie").peity("pie");
+	
+	
+	
 });

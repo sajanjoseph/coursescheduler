@@ -11,13 +11,13 @@ body{
 }
 
 .pending{
-	background-color:#FF0000 ;
+	background-color:#b5aeae ;
 	width:45%;	
 	
 }
 
 .finished{
-	background-color: #008000;
+	background-color: #79de87;
 	width:45%;
 }
 

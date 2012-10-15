@@ -21,7 +21,9 @@
       <br>
         {{task.submission_date}} <br>
         {{ task.expected_duration|mts_to_hours}} duration <br>
-        {{task.completed_till_now|mts_to_hours}} completed<br>
+        {{task.completed_till_now|mts_to_hours}} completed
+        <span class="pie">{{task.completed_till_now}}/{{ task.expected_duration}}</span>
+        <br>
         {{task.course}}
         </li>
    {% endfor %}
