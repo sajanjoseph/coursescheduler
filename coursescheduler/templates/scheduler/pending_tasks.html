@@ -1,29 +1,22 @@
-{% extends "scheduler/base.html" %}
-{% load humanize %} 
+{% extends "scheduler/base.html"  %}
+{% load humanize %}
 {% load csfilters %} 
-{% block title %}{{block.super}}{% endblock %}
-
 {% block content %}
-   {{block.super}}
-   <h2>Your {{page_title}}</h2>
-<p> You created {{total}} task{{total|pluralize:",s"}}</p>
+{{block.super }}
 
 {% if pending_tasks %}
-<h2> pending tasks</h2> total:{{pending_tasks|length}} task{{pending_tasks|length|pluralize:",s"}}
-<div class="pending"> 
+<h3>{{pending_tasks|length}} task{{pending_tasks|length|pluralize:",s"}} pending</h3> 
+<div class="pending">
 
-   <ul>
+<ul>
    {% for task in pending_tasks %}
-  
+   
       <li> 
       <a href="{% url task_details task.id %}"><b>{{task.name}}</b> </a> 
-      
-    
       <a href="{% url edit_task task.id  %}"><img src="{{ MEDIA_URL }}img/edit.png" ALT="EDIT"></a> <A href="{% url delete_task task.id  %}"><img src="{{ MEDIA_URL }}img/remove.png" ALT="DELETE"></A>
       Only {{task.submission_date|naturaltime}}
-     
-     
-     {% for i in task.submission_date|dayslist  %}
+      
+      {% for i in task.submission_date|dayslist  %}
          <img src="{{ MEDIA_URL }}img/dayicon.png">
      {% endfor %}
      
@@ -43,43 +36,28 @@
      {% for i in task.submission_date|halfhourslist  %}
          <img src="{{ MEDIA_URL }}img/halfhouricon.png">
      {% endfor %}
-     
-     
-    
+      
       <br>
         {{task.submission_date}} <br>
-        {{ task.expected_duration|mts_to_hours}} duration <br>
+        {{ task.expected_duration|mts_to_hours}}  duration <br>
         {{task.completed_till_now|mts_to_hours}} completed
         <span class="pie">{{task.completed_till_now}}/{{ task.expected_duration}}</span>
         <br>
         {{task.course}}
         </li>
    {% endfor %}
-</ul>
+   </ul>
 </div>
+
+{% else %}
+
+<h3>You don't have any pending tasks</h3>
+<br>
+	<p>
+   		<a id="create_task_link" href="{% url create_task %}"> Create New Task</a>
+   </p>
 {% endif %}
 
-
-{% if finished_tasks %}
-<h2> finished tasks</h2> total:{{finished_tasks|length}} task{{finished_tasks|length|pluralize:",s"}}
-<div class="finished">
-<ul>
-   {% for task in finished_tasks %}
-      <li> 
-      <a href="{% url task_details task.id %}"><b>{{task.name}}</b> </a> 
-      <a href="{% url edit_task task.id  %}"><img src="{{ MEDIA_URL }}img/edit.png" ALT="EDIT"></a> <A href="{% url delete_task task.id  %}"><img src="{{ MEDIA_URL }}img/remove.png" ALT="DELETE"></A>
-      
-      <br>
-        {{task.submission_date}} <br>
-        {{ task.expected_duration|mts_to_hours}} duration <br>
-        {{task.course}}<br>
-        closed on :
-        {{task.closed_date}}
-        </li>
-   {% endfor %}
-</ul>
-</div>
-{% endif %}
 
 <class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>   
 {% endblock %}

@@ -3,23 +3,31 @@
 {% load csfilters %} 
 {% block content %}
 {{block.super }}
-<span class="page_heading">{{page_title}}</span>
 
+{% if closed_tasks %}
+<h3>finished {{closed_tasks|length}} task{{closed_tasks|length|pluralize:",s"}}</h3>
+<div class="finished">
 <ul>
-   {% for task in all_pending_tasks %}
+   {% for task in closed_tasks %}
    
       <li> 
       <a href="{% url task_details task.id %}"><b>{{task.name}}</b> </a> 
       <a href="{% url edit_task task.id  %}"><img src="{{ MEDIA_URL }}img/edit.png" ALT="EDIT"></a> <A href="{% url delete_task task.id  %}"><img src="{{ MEDIA_URL }}img/remove.png" ALT="DELETE"></A>
-      Only {{task.submission_date|naturaltime}}
       <br>
         {{task.submission_date}} <br>
-        {{ task.expected_duration|mts_to_hours}}  duration <br>
-        {{task.status}} <br>
+        {{ task.expected_duration|mts_to_hours}}  duration 
+        <br>
+        {{task.completed_till_now|mts_to_hours}} completed
+        <br>
         {{task.course}}
+        <br>
+        closed on :
+        {{task.closed_date}}
         </li>
    {% endfor %}
    </ul>
+</div>
+{% endif %}
 
 <class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>   
 {% endblock %}

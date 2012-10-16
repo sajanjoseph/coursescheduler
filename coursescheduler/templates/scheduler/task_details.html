@@ -26,6 +26,8 @@
    <tr>    <th> Closed on     </th>   <td> {{ task.closed_date}} </td> </tr>
 {% endif %}
 </table>
+
+
 <p> <a href="{% url edit_task task.id %}"> <img src="{{ MEDIA_URL }}img/edit.png"> Edit Task</a> </p> 
 
 <p> <a href="{% url delete_task task.id %}"> <img src="{{ MEDIA_URL }}img/remove.png"> Delete Task</a> </p>

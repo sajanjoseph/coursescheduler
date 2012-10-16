@@ -174,11 +174,19 @@ def get_finished_tasks(user):
     return finished_tasks
     
 @login_required
-def all_pending_tasks(request,template_name,page_title):
+def pending_tasks(request,template_name,page_title):
     form_data = get_form_data(request)
-    all_pending_tasks = get_pending_tasks(request.user)
-    print 'all_pending_tasks=',all_pending_tasks
-    context={'page_title':page_title,'all_pending_tasks':all_pending_tasks}
+    pending_tasks = get_pending_tasks(request.user)
+    print 'all_pending_tasks=',pending_tasks
+    context={'page_title':page_title,'pending_tasks':pending_tasks}
+    return custom_render(request,context,template_name)
+
+@login_required
+def closed_tasks(request,template_name,page_title):
+    form_data = get_form_data(request)
+    closed_tasks = get_finished_tasks(request.user)
+    print 'closed_tasks=',closed_tasks
+    context={'page_title':page_title,'closed_tasks':closed_tasks}
     return custom_render(request,context,template_name)
        
 @login_required

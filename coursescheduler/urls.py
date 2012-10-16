@@ -71,11 +71,18 @@ urlpatterns=patterns('',
        },
       name='tasks'),
                      
-  url(r'^all_pending_tasks/$','coursescheduler.views.all_pending_tasks',
+  url(r'^pending_tasks/$','coursescheduler.views.pending_tasks',
       {
-         'template_name':'scheduler/all_pending_tasks.html',
-         'page_title':'All Pending Tasks'
+         'template_name':'scheduler/pending_tasks.html',
+         'page_title':'Pending Tasks'
        },
-      name='all_pending_tasks'),
+      name='pending_tasks'),
+                     
+   url(r'^closed_tasks/$','coursescheduler.views.closed_tasks',
+      {
+         'template_name':'scheduler/closed_tasks.html',
+         'page_title':'Closed Tasks'
+       },
+      name='closed_tasks'),
                     
 )

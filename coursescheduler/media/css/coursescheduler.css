@@ -12,13 +12,13 @@ body{
 
 .pending{
 	background-color:#b5aeae ;
-	width:45%;	
+	width:70%;	
 	
 }
 
 .finished{
 	background-color: #79de87;
-	width:45%;
+	width:70%;
 }
 
 span.logo{
@@ -30,4 +30,7 @@ span.logo{
     font-weight: bold;
     letter-spacing: -4px;
     text-shadow: 1px 2px 2px #000;
+}
+ul.errorlist{
+	color: red;
 }

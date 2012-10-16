@@ -49,6 +49,16 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         exclude = ('author','course','status','closed_date')
+    def clean_expected_duration(self):
+        exp_dur = self.cleaned_data['expected_duration']
+        if exp_dur <0:
+            raise forms.ValidationError('Provide positive integer')
+        return exp_dur
+    def clean_completed_till_now(self):
+        completed = self.cleaned_data['completed_till_now']
+        if completed <0:
+            raise forms.ValidationError('Provide positive integer')
+        return completed
 
 
 class TaskStatusForm(forms.Form):
