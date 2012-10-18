@@ -1,0 +1,39 @@
+{% load humanize %}
+{% load csfilters %}
+
+<li> 
+      <a href="{% url task_details task.id %}"><b>{{task.name}}</b> </a> 
+      <a href="{% url edit_task task.id  %}"><img src="{{ MEDIA_URL }}img/edit.png" ALT="EDIT"></a> <A href="{% url delete_task task.id  %}"><img src="{{ MEDIA_URL }}img/remove.png" ALT="DELETE"></A>
+      Only {{task.submission_date|naturaltime}}
+      
+      {% for i in task.submission_date|dayslist  %}
+         <img src="{{ MEDIA_URL }}img/dayicon.png">
+      {% endfor %}
+     
+     
+     {% for i in task.submission_date|halfdayslist  %}
+         <img src="{{ MEDIA_URL }}img/halfdayicon.png">
+     {% endfor %}
+     
+     {% for i in task.submission_date|quarterdayslist  %}
+         <img src="{{ MEDIA_URL }}img/quarterdayicon.png">
+     {% endfor %}
+     
+     {% for i in task.submission_date|hourslist  %}
+         <img src="{{ MEDIA_URL }}img/houricon.png">
+     {% endfor %}
+     
+     {% for i in task.submission_date|halfhourslist  %}
+         <img src="{{ MEDIA_URL }}img/halfhouricon.png">
+     {% endfor %}
+      
+      <br>
+        {{task.submission_date}} <br>
+        {{ task.expected_duration|mts_to_hours}}  duration <br>
+        {{task.completed_till_now|mts_to_hours}} completed
+        <span class="pie">{{task.completed_till_now}}/{{ task.expected_duration}}</span>
+        <br>
+        {{task.course}}
+        
+        
+        </li>

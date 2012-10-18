@@ -178,7 +178,8 @@ def pending_tasks(request,template_name,page_title):
     form_data = get_form_data(request)
     pending_tasks = get_pending_tasks(request.user)
     print 'all_pending_tasks=',pending_tasks
-    context={'page_title':page_title,'pending_tasks':pending_tasks}
+    current_date = datetime.datetime.now()
+    context={'page_title':page_title,'pending_tasks':pending_tasks,'current_date':current_date}
     return custom_render(request,context,template_name)
 
 @login_required
