@@ -10,7 +10,7 @@
 
 <ul>
    {% for task in pending_tasks %}
-   
+      <div id="pending_task_li">
       <li> 
       <a href="{% url task_details task.id %}"><b>{{task.name}}</b> </a> 
       <a href="{% url edit_task task.id  %}"><img src="{{ MEDIA_URL }}img/edit.png" ALT="EDIT"></a> <A href="{% url delete_task task.id  %}"><img src="{{ MEDIA_URL }}img/remove.png" ALT="DELETE"></A>
@@ -44,6 +44,8 @@
         <span class="pie">{{task.completed_till_now}}/{{ task.expected_duration}}</span>
         <br>
         {{task.course}}
+        
+        </div>
         </li>
    {% endfor %}
    </ul>

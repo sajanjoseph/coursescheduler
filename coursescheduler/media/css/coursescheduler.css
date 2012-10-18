@@ -11,14 +11,14 @@ body{
 }
 
 .pending{
-	background-color:#b5aeae ;
-	width:70%;	
+	background-color:#C0C0C0 ;
+	width:75%;	
 	
 }
 
 .finished{
 	background-color: #79de87;
-	width:70%;
+	width:75%;
 }
 
 span.logo{
@@ -31,6 +31,12 @@ span.logo{
     letter-spacing: -4px;
     text-shadow: 1px 2px 2px #000;
 }
+
+.oldtask{
+	background-color:red;
+	
+}
+
 ul.errorlist{
 	color: red;
 }
