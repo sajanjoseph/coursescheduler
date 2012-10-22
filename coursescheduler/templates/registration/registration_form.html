@@ -1,14 +1,11 @@
 {% extends "registration/auth_base.html" %}
 {% block content %}{{block.super}}
-
-
-<div class="subtitle short">Register</div>
-
-	   <div id="registerform" class="box half">
+	   
         <form action="/coursescheduler/account/register/" method="POST">{% csrf_token %}
         {% if form.non_field_errors %}
             {{ form.non_field_errors }}
 		{% endif %}
+		<h3>Register</h3>
         <fieldset class="registerfields">            
             <p><label for="id_username">Username:</label> {{ form.username }}</p>
             {% if form.username.errors %}<p class="error">{{ form.username.errors }}</p>{% endif %}            
@@ -20,12 +17,12 @@
             {% if form.password2.errors %}<p class="error">{{ form.password2.errors }}</p>{% endif %}
            
         <p>
-            <input type="submit" value="Submit" />
+            <input type="submit" class="submit" value="Submit" />
         </p>
         </fieldset>
         
         </form>
-		</div>
+		
 {% endblock %}
 
 {% block whatis %}

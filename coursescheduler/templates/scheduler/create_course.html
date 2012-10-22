@@ -3,14 +3,15 @@
 
 {% block content %}
    {{block.super}}
-   <span class="page_heading">{{page_title}}</span>
-   <form name="create_course_form"  class="create_course_form" method="POST" action ="." >{% csrf_token %}
+   <h3>{{page_title}}</h3>
+   <form name="create_course_form"  class="create" method="POST" action ="." >{% csrf_token %}
    {{ course_form.non_field_errors }}
    {{course_form.as_p}}
    {{ course_form.field_errors }}
-   <p><input type="submit" value="Create Course" /></p>
+   <p><input type="submit" class="submit" value="Create" /></p>
    </form>
 
-<class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>   
+<div class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>   
+</div>
 {% endblock %}
 

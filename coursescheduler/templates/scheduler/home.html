@@ -3,29 +3,27 @@
 
 {% block content %}
    {{block.super}}
-   <h2>{{page_title}}</h2>
    <p>
-   <a id="list_courses_link" href="{% url courses %}">List all courses</a>
+   
+   <a id="list_courses_link" href="{% url courses %}"><img src="{{ MEDIA_URL }}img/flwrs-small.png" >  All Courses</a>
    </p>
    
    <p>
-   <a id="create_course_link" href="{% url create_course %}">create new course</a>
+   <a id="create_course_link" href="{% url create_course %}"><img src="{{ MEDIA_URL }}img/papercut.png" > Create New Course</a>
+   </p>
+   
+   
+   
+   <p>
+   <a id="create_task_link" href="{% url create_task %}"><img src="{{ MEDIA_URL }}img/notes-crayon-small.png" > Create New Task</a>
    </p>
    
    <p>
-   <a id="list_tasks_link" href="{% url tasks %}"> List all Tasks</a>
+   <a id="pending_tasks_link" href="{% url pending_tasks %}"><img src="{{ MEDIA_URL }}img/crayons-small.png" > Pending tasks</a>
    </p>
    
    <p>
-   <a id="create_task_link" href="{% url create_task %}"> create new task</a>
-   </p>
-   
-   <p>
-   <a id="pending_tasks_link" href="{% url pending_tasks %}"> pending tasks</a>
-   </p>
-   
-   <p>
-   <a id="finished_tasks_link" href="{% url closed_tasks %}"> finished tasks</a>
+   <a id="finished_tasks_link" href="{% url closed_tasks %}"> <img src="{{ MEDIA_URL }}img/crayonbox.png" >Finished tasks</a>
    </p>
    
 {% endblock %}

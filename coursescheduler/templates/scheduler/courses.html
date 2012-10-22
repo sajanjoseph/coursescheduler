@@ -3,7 +3,7 @@
 
 {% block content %}
    {{block.super}}
-   <h2>Your {{page_title}}</h2>
+   <h3>You created tasks for these Courses</h3>
    
    <ul>
    {% for course in courses %}
@@ -21,5 +21,6 @@
       </li>
    {% endfor %}
    </ul>
-<class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>   
+<div class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a> 
+</div>  
 {% endblock %}

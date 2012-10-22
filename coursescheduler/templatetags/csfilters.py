@@ -40,7 +40,7 @@ def dayslist(datetimeval):
     if datetimeval>current:
         diff = datetimeval-current
         days = diff.days
-        print 'days=',days
+        #print 'days=',days
         return range(days)
     else:
         return []
@@ -52,7 +52,7 @@ def halfdayslist(datetimeval):
         diff = datetimeval-current
         totalhours = diff.seconds/3600
         halfdays = totalhours/12
-        print 'halfdays=',halfdays
+        #print 'halfdays=',halfdays
         return range(halfdays)
     else:
         return []
@@ -65,7 +65,7 @@ def quarterdayslist(datetimeval):
         totalhours = diff.seconds/3600
         balance_hours_after_half_day = totalhours % 12
         quarterdays = balance_hours_after_half_day / 6
-        print 'quarterdays=',quarterdays
+        #print 'quarterdays=',quarterdays
         return range(quarterdays)
     else:
         return []
@@ -78,7 +78,7 @@ def hourslist(datetimeval):
         totalhours = diff.seconds/3600
         balance_hours_after_half_day = totalhours % 12
         balance_hours_after_quarter_day = balance_hours_after_half_day % 6
-        print 'balance_hours_after_quarter_day=',balance_hours_after_quarter_day
+        #print 'balance_hours_after_quarter_day=',balance_hours_after_quarter_day
         return range(balance_hours_after_quarter_day)
     else:
         return []
@@ -91,7 +91,7 @@ def halfhourslist(datetimeval):
         balance_seconds = diff.seconds % 3600
         balance_minutes = balance_seconds / 60
         balance_half_hours = balance_minutes /30
-        print 'balance_half_hours=',balance_half_hours
+        #print 'balance_half_hours=',balance_half_hours
         return range(balance_half_hours)
     else:
         return []

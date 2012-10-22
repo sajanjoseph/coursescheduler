@@ -2,9 +2,9 @@
 {% load csfilters %} 
 {% block content %}
 {{block.super }}
-<span class="page_heading">{{page_title}}</span>
-
-
+<div class="details">
+<span>Created By</span><span>{{task.author}}</span>
+</div>
 
 <table >
 
@@ -32,5 +32,6 @@
 
 <p> <a href="{% url delete_task task.id %}"> <img src="{{ MEDIA_URL }}img/remove.png"> Delete Task</a> </p>
 
-<class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>    
+<div class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>   
+</div> 
 {% endblock %}

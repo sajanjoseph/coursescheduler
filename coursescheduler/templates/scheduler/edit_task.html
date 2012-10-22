@@ -2,19 +2,20 @@
 
 {% block content %}
 {{block.super }}
-<span class="page_heading">{{page_title}}</span>
 
-<form name="edit_course_form" method="POST" action=".">{% csrf_token %}
+
+<form name="edit_course_form" class="create" method="POST" action=".">{% csrf_token %}
 {{task_form.as_p}}
 {{ task_status_form.as_p}}
 {{ course_choices_form.as_p}}
-or add a new course
+<h3>or add a new course</h3>
 {{ course_title_form.as_p}}
 <p> 
-   <input type="submit" value="Save Changes"/>
+   <input type="submit" class="submit" value="Save Changes"/>
    
 </p>
 </form>
 
-<class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>
+<div class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>
+</div>
 {% endblock %}

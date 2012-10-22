@@ -12,7 +12,6 @@ from django.db import transaction
 import datetime
 
 def logout(request):
-    print 'logout'
     return logout_then_login(request)
 
 
@@ -21,7 +20,6 @@ def custom_render(request,context,template):
     return render_to_response(template,req_context)
 
 def home(request,template_name,page_title):
-    print 'home'
     return custom_render(request,{'page_title':page_title},template_name)
 
 def get_form_data(request):
@@ -56,10 +54,7 @@ def create_task(request,template_name,page_title):
     allformsvalid = validate_forms([task_form,course_title_form,course_choices_form])
     if request.method == 'POST' and allformsvalid:
         #TODO redirect to task detail
-        #print 'valid post'
-        #print 'course_title_form.cleaned_data=',course_title_form.cleaned_data
         course_title = course_title_form.cleaned_data['title']
-        #print 'course_title=',course_title
         course_title = course_title.strip()
         if len(course_title)>0:
             course = get_course_from_title(request.user,course_title)
@@ -69,20 +64,16 @@ def create_task(request,template_name,page_title):
                 from django.forms.util import ErrorList
                 course_choices_form._errors['courseoption']= ErrorList([u"Select a course"])
                 return custom_render(request,context,template_name)
-            #print 'course=',course
             #course = Course.objects.get(id=course_choice_id)
             if course and request.user not in course.students.all():
                 course.students.add(request.user)
                 #print 'added user to course'
                 course.save()
         task = task_form.save(commit=False)
-        #print 'saved task nocommit'
         task.author = request.user
-        #print 'added author'
         task.course = course
         task.save()
-        #print 'added course'
-        return redirect('tasks')
+        return redirect('pending_tasks')
     return custom_render(request,context,template_name)
 
 def validate_forms(forms):
@@ -93,10 +84,8 @@ def validate_forms(forms):
 
 @login_required
 def edit_task(request,id,template_name,page_title):
-    #print 'edit task'
     form_data = get_form_data(request)
     task = get_object_or_404(Task,pk=id,author=request.user)
-    #print 'got task=',task
     task_form = TaskForm(form_data,instance=task)
     task_status_form = TaskStatusForm(form_data)
     course_title_form = CourseTitleForm(form_data)
@@ -105,10 +94,8 @@ def edit_task(request,id,template_name,page_title):
     context = {'page_title':page_title,'task_form':task_form,'task_status_form':task_status_form}
     context.update({'course_title_form':course_title_form,'course_choices_form':course_choices_form})
     if request.method == 'POST' and allformsvalid:
-        #print 'valid post'
         #if valid entry in course text field get/create course
         #else get course from dropdown list
-        
         course_title = course_title_form.cleaned_data['title']
         #course_from_title(course_title)
         course_title = course_title.strip()
@@ -117,10 +104,8 @@ def edit_task(request,id,template_name,page_title):
         else:
             #ModelChoiceForm returns a course instance
             course = course_choices_form.cleaned_data['courseoption']
-            #print 'got course =',course
             if request.user not in course.students.all():
                 course.students.add(request.user)
-                #print 'added user to course'
                 course.save()
         # get name,submission_date from form and update task
         task_name = task_form.cleaned_data['name']
@@ -131,9 +116,6 @@ def edit_task(request,id,template_name,page_title):
         task.name = task_name
         task.submission_date = submission_date
         task.status = task_status
-        #print 'new name=',task_name
-        #print 'new submission_date=',submission_date
-        #print 'new status=',task_status
         task.course = course
         task.save()
         return redirect('tasks')
@@ -177,7 +159,6 @@ def get_finished_tasks(user):
 def pending_tasks(request,template_name,page_title):
     form_data = get_form_data(request)
     pending_tasks = get_pending_tasks(request.user)
-    print 'all_pending_tasks=',pending_tasks
     current_date = datetime.datetime.now()
     context={'page_title':page_title,'pending_tasks':pending_tasks,'current_date':current_date}
     return custom_render(request,context,template_name)
@@ -186,7 +167,6 @@ def pending_tasks(request,template_name,page_title):
 def closed_tasks(request,template_name,page_title):
     form_data = get_form_data(request)
     closed_tasks = get_finished_tasks(request.user)
-    print 'closed_tasks=',closed_tasks
     context={'page_title':page_title,'closed_tasks':closed_tasks}
     return custom_render(request,context,template_name)
        
@@ -209,14 +189,12 @@ def create_course(request,template_name,page_title):
 @transaction.commit_on_success
 def edit_course(request,id,template_name,page_title):
     course=get_object_or_404(Course,pk=id,students=request.user,creator=request.user)
-    #print 'course=',course
     form_data = get_form_data(request)
     edit_course_form = EditCourseForm(form_data,instance=course)
     context = {'page_title':page_title,'edit_course_form':edit_course_form}
     valid_form = edit_course_form.is_valid()
     if request.method =='POST' and valid_form:
         desc = edit_course_form.cleaned_data['description']
-        #print 'new desc=',desc
         course.description = desc
         course.save()
         return redirect('courses')
@@ -233,15 +211,12 @@ def delete_course(request,id):
     #get all tasks of user that are of this course
     course = get_object_or_404(Course,pk=id,students=request.user,creator=request.user)
     tasks = Task.objects.filter(author=request.user,course=course)
-    #print 'tasks=',tasks
     #delete those tasks
     for task in tasks:
         task.delete()
-    #print 'after delete ..tasks=',Task.objects.filter(author=request.user,course=course)
     #remove user from course's students
     course.students.remove(request.user)
     #if course.students empty, delete course
-    #print 'students count=',course.students.count()
     print 'course.students.count()=',course.students.count()
     if course.students.count() == 0:
         course.delete()

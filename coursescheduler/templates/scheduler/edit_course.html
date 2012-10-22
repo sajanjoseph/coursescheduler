@@ -3,18 +3,18 @@
 
 {% block content %}
    {{block.super}}
-   <span class="page_heading">{{page_title}}</span>
-   <form name="edit_course_form" method="POST" action=".">{% csrf_token %}
+   
+   <form name="edit_course_form" class="create" method="POST" action=".">{% csrf_token %}
    
    {{ edit_course_form.non_field_errors }}
    {{edit_course_form.as_p}}
    
    {{ edit_course_form.field_errors }}
    <p> 
-   <input type="submit" value="Save Changes"/>
+   <input type="submit" class="submit" value="Save Changes"/>
    
    </p>
    </form>
 
-<class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>   
+<div class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>   
 {% endblock %}
