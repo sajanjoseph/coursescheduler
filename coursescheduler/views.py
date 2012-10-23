@@ -118,7 +118,7 @@ def edit_task(request,id,template_name,page_title):
         task.status = task_status
         task.course = course
         task.save()
-        return redirect('tasks')
+        return redirect('pending_tasks')
     
     #if GET set initial value of course in dropdown list
     course_choices_form = CourseChoicesForm(initial={'courseoption':task.course.id})
@@ -130,7 +130,7 @@ def edit_task(request,id,template_name,page_title):
 def delete_task(request,id):
     task = get_object_or_404(Task,id=id,author=request.user)
     task.delete()
-    return redirect('tasks')
+    return redirect('pending_tasks')
 
 @login_required
 def task_details(request,id,template_name,page_title):

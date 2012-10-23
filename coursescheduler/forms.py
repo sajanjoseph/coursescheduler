@@ -21,7 +21,7 @@ class CourseTitleForm(forms.Form):
     title = forms.CharField(max_length=200,required=False)
     def clean(self):
         title = self.cleaned_data['title']
-        print 'CourseTitleForm:clean:title=',title
+        #print 'CourseTitleForm:clean:title=',title
         if not Course.objects.count() and not self.cleaned_data['title']:
             raise forms.ValidationError('you need to create a course')
         return self.cleaned_data

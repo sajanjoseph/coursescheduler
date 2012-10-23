@@ -64,12 +64,12 @@ urlpatterns=patterns('',
        },
       name='task_details'),                   
                      
-  url(r'^tasks/$','coursescheduler.views.tasks',
-      {
-         'template_name':'scheduler/tasks.html',
-         'page_title':'Tasks'
-       },
-      name='tasks'),
+#  url(r'^tasks/$','coursescheduler.views.tasks',
+#      {
+#         'template_name':'scheduler/tasks.html',
+#         'page_title':'Tasks'
+#       },
+#      name='tasks'),
                      
   url(r'^pending_tasks/$','coursescheduler.views.pending_tasks',
       {

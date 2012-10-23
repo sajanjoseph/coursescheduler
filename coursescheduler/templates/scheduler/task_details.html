@@ -2,32 +2,40 @@
 {% load csfilters %} 
 {% block content %}
 {{block.super }}
-<div class="details">
-<span>Created By</span><span>{{task.author}}</span>
-</div>
 
-<table >
 
-<tr>   <th> Created By   </th> <td> {{task.author}} </td>  </tr>
-<tr>    <th> Name      </th>   <td> {{ task.name}} </td> </tr>
-<tr>    <th> Course      </th>   <td> {{ task.course}} </td> </tr>
-<tr>   <th> Date of Submission   </th> <td> {{task.submission_date|date:"j F, Y"}} </td>  </tr>
-<tr>    <th> Expected Duration </th>   <td> {{ task.expected_duration|mts_to_hours}} </td> </tr>
-<tr>    <th> Completed </th>   <td> {{ task.completed_till_now|mts_to_hours}} 
-</td>
+<dl>
+    <dt>Created By</dt>
+    <dd>{{task.author}} </dd>
 
-<td>
-<span class="pie">{{task.completed_till_now}}/{{ task.expected_duration}}</span>
-</td>
-</tr>
+    <dt>Name</dt>
+    <dd>{{ task.name}}</dd>
 
-<tr>    <th> Status      </th>   <td> {{ task.status}} </td> </tr>
+    <dt>Course</dt>
+    <dd>{{ task.course}}</dd>
+
+    <dt>Date of Submission</dt>
+    <dd> {{task.submission_date|date:"j F, Y"}}</dd>
+    
+    <dt>Expected Duration</dt>
+    <dd>{{ task.expected_duration|mts_to_hours}}</dd>
+    
+    <dt>Completed</dt>
+    <dd>{{ task.completed_till_now|mts_to_hours}} 
+    <span class="pie">{{task.completed_till_now}}/{{ task.expected_duration}}</span>
+    </dd>
+    
+
+    <dt>Status</dt>
+    <dd>{{ task.status}}</dd>
 {% if  task.closed_date %}
-   <tr>    <th> Closed on     </th>   <td> {{ task.closed_date}} </td> </tr>
+    <dt>Closed On</dt>
+    <dd>{{ task.closed_date}}</dd>
 {% endif %}
-</table>
+</dl>
 
-
+<div class="clearflt">
+</div>
 <p> <a href="{% url edit_task task.id %}"> <img src="{{ MEDIA_URL }}img/edit.png"> Edit Task</a> </p> 
 
 <p> <a href="{% url delete_task task.id %}"> <img src="{{ MEDIA_URL }}img/remove.png"> Delete Task</a> </p>
