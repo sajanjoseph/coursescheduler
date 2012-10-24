@@ -34,6 +34,13 @@ def mts_to_hours(minutes_value):
 def repeat(count):
     return range(int(count))
 
+@register.filter
+def diff_days(datetimeval):
+    current = datetime.datetime.now()
+    diff = datetimeval-current
+    days = diff.days
+    return days
+
 @register.filter    
 def dayslist(datetimeval):
     current = datetime.datetime.now()

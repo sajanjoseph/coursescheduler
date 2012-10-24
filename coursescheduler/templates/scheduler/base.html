@@ -41,6 +41,9 @@ var M_URL = "{{MEDIA_URL}}";
       {% endblock %}
 </div>
 
-
+{% block footer %}
+<div class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a> 
+</div> 
+{% endblock %}
 </body>
 </html>

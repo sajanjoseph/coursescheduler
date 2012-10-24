@@ -5,27 +5,29 @@
       <a href="{% url task_details task.id %}"><b>{{task.name}}</b> </a> 
       <a href="{% url edit_task task.id  %}"><img src="{{ MEDIA_URL }}img/edit.png" ALT="EDIT"></a> <A href="{% url delete_task task.id  %}"><img src="{{ MEDIA_URL }}img/remove.png" ALT="DELETE"></A>
       Only {{task.submission_date|naturaltime}}
+      	
+      	{% if task.submission_date|diff_days < 7 and task.submission_date|diff_days > -1 %}
       
-      {% for i in task.submission_date|dayslist  %}
-         <img src="{{ MEDIA_URL }}img/dayicon.png">
-      {% endfor %}
-     
-     
-     {% for i in task.submission_date|halfdayslist  %}
-         <img src="{{ MEDIA_URL }}img/halfdayicon.png">
-     {% endfor %}
-     
-     {% for i in task.submission_date|quarterdayslist  %}
-         <img src="{{ MEDIA_URL }}img/quarterdayicon.png">
-     {% endfor %}
-     
-     {% for i in task.submission_date|hourslist  %}
-         <img src="{{ MEDIA_URL }}img/houricon.png">
-     {% endfor %}
-     
-     {% for i in task.submission_date|halfhourslist  %}
-         <img src="{{ MEDIA_URL }}img/halfhouricon.png">
-     {% endfor %}
+			{% for i in task.submission_date|dayslist  %}
+			   <img src="{{ MEDIA_URL }}img/dayicon.png">
+			{% endfor %}
+	     
+			{% for i in task.submission_date|halfdayslist  %}
+			    <img src="{{ MEDIA_URL }}img/halfdayicon.png">
+			{% endfor %}
+	     
+			{% for i in task.submission_date|quarterdayslist  %}
+			    <img src="{{ MEDIA_URL }}img/quarterdayicon.png">
+			{% endfor %}
+			
+			{% for i in task.submission_date|hourslist  %}
+			    <img src="{{ MEDIA_URL }}img/houricon.png">
+			{% endfor %}
+			
+			{% for i in task.submission_date|halfhourslist  %}
+			    <img src="{{ MEDIA_URL }}img/halfhouricon.png">
+			{% endfor %}
+		{% endif %}
       
       <br>
         {{task.submission_date}} <br>

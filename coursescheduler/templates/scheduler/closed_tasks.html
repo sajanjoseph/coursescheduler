@@ -28,7 +28,9 @@
    </ul>
 </div>
 {% endif %}
+ 
+{% endblock %}
 
-<div class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a> 
-</div>  
+{% block footer %}
+{{block.super}}
 {% endblock %}

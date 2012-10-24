@@ -40,6 +40,8 @@
 
 <p> <a href="{% url delete_task task.id %}"> <img src="{{ MEDIA_URL }}img/remove.png"> Delete Task</a> </p>
 
-<div class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>   
-</div> 
+
+{% endblock %}
+{% block footer %}
+{{block.super}}
 {% endblock %}

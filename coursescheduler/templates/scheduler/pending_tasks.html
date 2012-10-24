@@ -16,7 +16,7 @@
 	       </div>
 	     {% else%}
 	       <div class="pending">
-	      	{% include "scheduler/includes/task_info.html" with task=task %}
+	      	{% include "scheduler/includes/task_info.html" with task=task current_date=current_date %}
 	       </div>
 	     {% endif %}
      
@@ -32,8 +32,9 @@
    		<a id="create_task_link" href="{% url create_task %}"> Create New Task</a>
    </p>
 {% endif %}
+  
+{% endblock %}
 
-
-<div class="footer" ><a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png"></a>
-</div>   
+{% block footer %}
+{{block.super}}
 {% endblock %}
