@@ -81,8 +81,9 @@
 		
 	}
 	
-	#error_message {
+.error_message {
     border: 2px solid #FAAFBE;
+    border-radius:10px;
     margin: auto;
     padding: 0.5em;
     color: #fff;

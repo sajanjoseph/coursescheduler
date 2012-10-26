@@ -162,7 +162,7 @@ def get_pending_tasks(user):
 
 
 def get_finished_tasks(user):
-    finished_tasks = Task.objects.filter(author=user,status='FINI')
+    finished_tasks = Task.objects.filter(author=user,status='FINI').order_by('-closed_date')
     return finished_tasks
     
 @login_required
@@ -212,7 +212,7 @@ def edit_course(request,id,template_name,page_title):
     
 @login_required
 def courses(request,template_name,page_title):
-    courses = Course.objects.filter(students = request.user)
+    courses = Course.objects.filter(students = request.user).order_by('title')
     context = {'page_title':page_title,'courses':courses}
     return custom_render(request,context,template_name)
 

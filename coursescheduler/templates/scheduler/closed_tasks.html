@@ -14,14 +14,14 @@
       <a href="{% url task_details task.id %}"><b>{{task.name}}</b> </a> 
       <a href="{% url edit_task task.id  %}"><img src="{{ MEDIA_URL }}img/edit.png" ALT="EDIT"></a> <A href="{% url delete_task task.id  %}"><img src="{{ MEDIA_URL }}img/remove.png" ALT="DELETE"></A>
       <br>
-        {{task.submission_date}} <br>
+        Deadline : {{task.submission_date}} <br>
         {{ task.expected_duration|mts_to_hours}}  duration 
         <br>
         {{task.completed_till_now|mts_to_hours}} completed
         <br>
-        {{task.course}}
+        Course : {{task.course}}
         <br>
-        closed on :
+        Closed on :
         {{task.closed_date}}
         </li>
    {% endfor %}
