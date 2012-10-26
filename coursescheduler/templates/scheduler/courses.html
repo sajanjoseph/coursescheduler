@@ -3,8 +3,11 @@
 
 {% block content %}
    {{block.super}}
-   <h3>You created tasks for these Courses</h3>
-   
+   {% if courses %}
+   	<h3>You created tasks for these Courses</h3>
+   {% else %}
+   	<h3>You don't have any Courses</h3>
+   {% endif %}
    <ul>
    {% for course in courses %}
    

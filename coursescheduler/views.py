@@ -129,7 +129,17 @@ def edit_task(request,id,template_name,page_title):
 @login_required
 def delete_task(request,id):
     task = get_object_or_404(Task,id=id,author=request.user)
+    course = task.course
     task.delete()
+    num_my_other_tasks_for_this_course = Task.objects.filter(author=request.user,course=course).count()
+    #print 'num_my_other_tasks_for_this_course=',num_my_other_tasks_for_this_course
+    if num_my_other_tasks_for_this_course==0:
+        course.students.remove(request.user)
+        #print 'removed %s from course.students'%request.user.username
+    numstudents = course.students.count()
+    #print 'numstudents=',numstudents
+    if numstudents==0:
+        course.delete()
     return redirect('pending_tasks')
 
 @login_required
