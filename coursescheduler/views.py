@@ -86,6 +86,7 @@ def validate_forms(forms):
 def edit_task(request,id,template_name,page_title):
     form_data = get_form_data(request)
     task = get_object_or_404(Task,pk=id,author=request.user)
+    oldcourse = task.course#added
     task_form = TaskForm(form_data,instance=task)
     task_status_form = TaskStatusForm(form_data)
     course_title_form = CourseTitleForm(form_data)
@@ -116,8 +117,15 @@ def edit_task(request,id,template_name,page_title):
         task.name = task_name
         task.submission_date = submission_date
         task.status = task_status
+        #if newcourse diff from oldcourse,then check if user has other tasks for the oldcourse,else remove user from students
+        if course!=oldcourse:
+            print 'different course set for task:',task
+            usertasks_for_oldcourse = oldcourse.task_set.filter(author=request.user)
+            if usertasks_for_oldcourse.count()==1:
+                oldcourse.students.remove(request.user)
         task.course = course
         task.save()
+        remove_if_has_no_tasks(oldcourse)#delete course with no tasks at all
         return redirect('pending_tasks')
     
     #if GET set initial value of course in dropdown list
@@ -125,6 +133,14 @@ def edit_task(request,id,template_name,page_title):
     task_status_form = TaskStatusForm(initial={'statusoption':task.status})
     context.update({'course_choices_form':course_choices_form,'task_status_form':task_status_form})
     return custom_render(request,context,template_name)
+
+"""
+if this course has no tasks ,delete the course
+"""
+def remove_if_has_no_tasks(course):
+    taskscount=course.task_set.count()
+    if taskscount==0:
+        course.delete()
 
 @login_required
 def delete_task(request,id):
