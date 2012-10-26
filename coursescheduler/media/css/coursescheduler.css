@@ -166,14 +166,14 @@ span.logo{
     text-shadow: 1px 2px 2px #000;
 }
 
-dt { 
+.task_details_div dt { 
 	color: #7D775C;
 	font-weight : bold;
 	clear:left; 
 	float:left; 
 	width:12em; }
 	
-dd { float:left; }
+.task_details_div dd { float:left; }
 
 div.clearflt{
 	clear:both;

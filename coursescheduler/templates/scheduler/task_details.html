@@ -3,7 +3,7 @@
 {% block content %}
 {{block.super }}
 
-
+<div class="task_details_div">
 <dl>
     <dt>Created By</dt>
     <dd>{{task.author}} </dd>
@@ -35,6 +35,7 @@
 </dl>
 
 <div class="clearflt">
+</div>
 </div>
 <p> <a href="{% url edit_task task.id %}"> <img src="{{ MEDIA_URL }}img/edit.png"> Edit Task</a> </p> 
 
