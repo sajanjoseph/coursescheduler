@@ -45,24 +45,25 @@
 	
 	input:hover{
 	
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#aee3f4), to(#EEEEEE));
-	background: -moz-linear-gradient(top, #aee3f4,#EEEEEE  25px);
-}
+	    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#aee3f4), to(#EEEEEE));
+	    background: -moz-linear-gradient(top, #aee3f4,#EEEEEE  25px);
+    }
 	
 	input.submit {
-
-	position:relative;
-	width:200px;
-	background:#09C;
-	color:#fff;
-	font-family: Tahoma, Geneva, sans-serif;
-	height:30px;
-	-webkit-border-radius: 15px;
-	-moz-border-radius: 15px;
-	border-radius: 15px;
-	border: 1p solid #999;
-	border-top: 1px solid #A4A4A4;
-	margin-top: 10px;
+	    position:relative;
+	    width:200px;
+	    background:#09C;
+	    color:#fff;
+	    font-family: Tahoma, Geneva, sans-serif;
+	    height:30px;
+	    -webkit-border-radius: 15px;
+	    -moz-border-radius: 15px;
+	    border-radius: 15px;
+	    border: 1p solid #999;
+	    border-top: 1px solid #A4A4A4;
+	    margin-top: 10px;
+	    margin-left:auto;
+	    margin-right:auto;
 	}
 
 	input.submit:hover {
@@ -77,10 +78,6 @@
 		
 	}
 
-	input:hover {
-		
-	}
-	
 .error_message {
     border: 2px solid #FAAFBE;
     border-radius:10px;

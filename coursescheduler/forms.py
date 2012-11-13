@@ -21,7 +21,6 @@ class CourseTitleForm(forms.Form):
     title = forms.CharField(max_length=200,required=False)
     def clean(self):
         title = self.cleaned_data['title']
-        #print 'CourseTitleForm:clean:title=',title
         if not Course.objects.count() and not self.cleaned_data['title']:
             raise forms.ValidationError('you need to create a course')
         return self.cleaned_data
@@ -38,7 +37,16 @@ class EditCourseForm(forms.ModelForm):
         exclude = ('students','creator',)
 
 class CourseChoicesForm(forms.Form):
-    courseoption = forms.ModelChoiceField(queryset=Course.objects.all(),required=False,label='Course')
+    courseoption = forms.ModelChoiceField(
+                           queryset = Course.objects.none(),
+                           required=False,label='Course')
+    def __init__(self, coursecreator,*args, **kwargs):
+        super(CourseChoicesForm, self).__init__(*args, **kwargs)
+        self.creator=coursecreator
+        #self.courseoption = forms.ModelChoiceField(queryset=Course.objects.filter(creator=self.creator),required=False,label='Course')
+        self.fields['courseoption'].queryset = Course.objects.filter(creator=self.creator)
+        print "self.fields['courseoption'].queryset:after=",self.fields['courseoption'].queryset
+    
 #class CourseChoicesForm(forms.Form):
 #    courseoption = forms.ChoiceField(choices=[],required=False,label='Course')
 #    def __init__(self, *args, **kwargs):

@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL=StyleSheet HREF="{{MEDIA_URL}}css/coursescheduler.css" TYPE="text/css" MEDIA="screen, print"/>
+<title>404</title>
+</head>
+<body>
+{% url home as home_url %}
+<div id="logo"> <img src="{{ MEDIA_URL }}img/ch2.png" HEIGHT="118" WIDTH="118">
+<span class="logo">Course Scheduler</span>
+</div>
+<div id="content">
+<div class="server-error">
+<p class="error-title">   sorry..we couldn't find that page </a> </p>
+<a href="{% url home  %}"><img src="{{ MEDIA_URL }}img/home.png">
+
+</div>
+</div>
+
+</body>
+</html>
