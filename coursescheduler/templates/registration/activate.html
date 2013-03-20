@@ -1,12 +1,14 @@
 {% extends "registration/auth_base.html" %}
 {% block content %}{{block.super}}
 
+<h2>Account activation error</h2>
+Activation failed !
 
-<span id="message">Your account is now active!</span>  
-<p class="center">  <a class="btnlnk" href="{% url coursescheduler_login %}" > Login </a> </p> 
+
+<p>The activation key "{{ activation_key }}" is invalid and cannot be used to activate this account 
 
 {% endblock %}
 {% block whatis %}
-Activation complete message
+Activation failed message
 {% endblock %}
 
