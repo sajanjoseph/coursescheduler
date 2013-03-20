@@ -4,15 +4,18 @@ Created on Sep 13, 2012
 @author: sajan
 '''
 from django.conf.urls.defaults import *
+import os
+import registration
+
 
 urlpatterns=patterns('',
-  url(r'^account/',include('coursescheduler.accturls.login')),
-  url(r'^$','coursescheduler.views.home',
-      {
-         'template_name':'scheduler/home.html',
-         'page_title':'Home'
-       },
-      name='home'),
+  
+  url(r'^account/login/$','django.contrib.auth.views.login',{'template_name':'scheduler/mylogin.html'},name='coursescheduler_login'),
+          
+  url(r'^account/logout/$','django.contrib.auth.views.logout',{'template_name':'scheduler/mylogout.html'}, name = 'coursescheduler_logout'),
+  
+  url(r'^account/',include('registration.backends.default.urls')),
+  
   url(r'^create_course/$','coursescheduler.views.create_course',
       {
          'template_name':'scheduler/create_course.html',
@@ -64,12 +67,6 @@ urlpatterns=patterns('',
        },
       name='task_details'),                   
                      
-#  url(r'^tasks/$','coursescheduler.views.tasks',
-#      {
-#         'template_name':'scheduler/tasks.html',
-#         'page_title':'Tasks'
-#       },
-#      name='tasks'),
                      
   url(r'^pending_tasks/$','coursescheduler.views.pending_tasks',
       {
@@ -84,5 +81,25 @@ urlpatterns=patterns('',
          'page_title':'Closed Tasks'
        },
       name='closed_tasks'),
+  
+  )
+
+custom_reg_patterns = patterns('',
+         url(r'^account/register/', registration.views.register, 
+          {'form_class':registration.forms.RegistrationFormUniqueEmail,'backend':'registration.backends.default.DefaultBackend' },
+          
+          name='registration_register'),
+  )
+urlpatterns += custom_reg_patterns
+  
+urlpatterns += patterns('',
+  url(r'^$','coursescheduler.views.home',
+      {
+         'template_name':'scheduler/home.html',
+         'page_title':'Home'
+       },
+      name='home'),
+  
                     
 )
+

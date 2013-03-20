@@ -7,7 +7,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import datetime
 
-
+PENDING='PEND'
+FINISHED='FINI'
 
 class Course(models.Model):
     students = models.ManyToManyField(User,related_name='course_students')
@@ -21,8 +22,8 @@ class Course(models.Model):
 		verbose_name_plural="Courses"
 
 status_values = (
-                 ('PEND','PENDING'),
-                 ('FINI','FINISHED'),
+                 (PENDING,'PENDING'),
+                 (FINISHED,'FINISHED'),
                  )
 
 class Task(models.Model):
@@ -30,7 +31,7 @@ class Task(models.Model):
     name = models.CharField(max_length=200)
     submission_date = models.DateTimeField(default=lambda:datetime.datetime.now()+datetime.timedelta(days=1))#making this django.utils.timezone.now() causes error even with USE_TZ=True
     author = models.ForeignKey(User)
-    status = models.CharField(max_length = 4,choices=status_values ,default = 'PEND')
+    status = models.CharField(max_length = 4,choices=status_values ,default = PENDING)
     expected_duration = models.IntegerField(default=60,help_text='in minutes')
     completed_till_now = models.IntegerField(default=0,help_text='in minutes')
     closed_date = models.DateTimeField(null=True)

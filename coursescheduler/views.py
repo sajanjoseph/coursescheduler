@@ -10,9 +10,18 @@ from django.contrib.auth.views import logout_then_login
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 import datetime
+from django.core.cache import cache
+from models import PENDING,FINISHED
 
-PENDING='PEND'
-FINISHED='FINI'
+prefix = 'tasks'
+def key_function(args,prefix=prefix):
+    #sample tasks-myusername-2012-01-22'
+    #
+    keyargs =[prefix]
+    keyargs.extend(args)
+    key = '-'.join(keyargs)
+    return key
+    
 
 def logout(request):
     return logout_then_login(request)
@@ -79,6 +88,10 @@ def create_task(request,template_name,page_title):
         task.author = request.user
         task.course = course
         task.save()
+        #cache clear for pending tasks
+        pending_tasks_key = key_function([request.user.username],'pending-tasks')
+        if cache.has_key(pending_tasks_key):
+            cache.delete(pending_tasks_key)
         return redirect('pending_tasks')
     return custom_render(request,context,template_name)
 
@@ -88,11 +101,22 @@ def validate_forms(forms):
             return False
     return True
 
+def clear_tasks_from_cache(task,user):
+    if task.status==PENDING:
+        pending_tasks_key = key_function([user.username],'pending-tasks')
+        if cache.has_key(pending_tasks_key):
+            cache.delete(pending_tasks_key)
+    else:
+        finished_tasks_key = key_function([user.username],'finished-tasks')
+        if cache.has_key(finished_tasks_key):
+            cache.delete(finished_tasks_key)
+
 @login_required
 @transaction.commit_on_success
 def edit_task(request,id,template_name,page_title):
     form_data = get_form_data(request)
     task = get_object_or_404(Task,pk=id,author=request.user)
+    clear_tasks_from_cache(task,request.user)
     oldcourse = task.course#added
     task_form = TaskForm(form_data,instance=task)
     task_status_form = TaskStatusForm(form_data)
@@ -132,6 +156,9 @@ def edit_task(request,id,template_name,page_title):
                 oldcourse.students.remove(request.user)
         task.course = course
         task.save()
+        clear_tasks_from_cache(task,request.user)
+        #cache clear  IS THIS WORKING???
+        
         remove_if_has_no_tasks(oldcourse)#delete course with no tasks at all
         return redirect('pending_tasks')
     
@@ -153,6 +180,7 @@ def remove_if_has_no_tasks(course):
 @transaction.commit_on_success
 def delete_task(request,id):
     task = get_object_or_404(Task,id=id,author=request.user)
+    clear_tasks_from_cache(task,request.user)
     course = task.course
     task.delete()
     num_my_other_tasks_for_this_course = Task.objects.filter(author=request.user,course=course).count()
@@ -181,12 +209,22 @@ def tasks(request,template_name,page_title):
     return custom_render(request,context,template_name)
 
 def get_pending_tasks(user):
-    pending_tasks = Task.objects.filter(author=user,status=PENDING)
+    key = key_function([user.username],'pending-tasks')
+    pending_tasks = cache.get(key) if cache.has_key(key) else None
+    if not pending_tasks:
+        pending_tasks = Task.objects.filter(author=user,status=PENDING)
+        print 'DBQUERY:pending tasks got from db'
+        cache.set(key,pending_tasks)
     return pending_tasks
 
 
 def get_finished_tasks(user):
-    finished_tasks = Task.objects.filter(author=user,status=FINISHED).order_by('-closed_date')
+    key = key_function([user.username],'finished-tasks')
+    finished_tasks = cache.get(key) if cache.has_key(key) else None
+    if not finished_tasks:
+        finished_tasks = Task.objects.filter(author=user,status=FINISHED).order_by('-closed_date')
+        print 'DBQUERY:finished tasks got from db'
+        cache.set(key,finished_tasks)
     return finished_tasks
     
 @login_required
