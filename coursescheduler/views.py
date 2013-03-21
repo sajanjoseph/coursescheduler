@@ -10,6 +10,8 @@ from django.contrib.auth.views import logout_then_login
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 import datetime
+import simplejson;
+from django.core.urlresolvers import reverse
 from django.core.cache import cache
 from models import PENDING,FINISHED
 
@@ -31,8 +33,26 @@ def custom_render(request,context,template):
     req_context=RequestContext(request,context)
     return render_to_response(template,req_context)
 
+@login_required
 def home(request,template_name,page_title):
-    return custom_render(request,{'page_title':page_title},template_name)
+    pend_tasks_data = []
+    pend_tasks = get_pending_tasks(request.user)
+    pend_tasks_dump = ''
+    for task in pend_tasks:
+        id = task.id;
+        name = task.name
+        sub_date = task.submission_date
+        link = reverse('task_details',args=[id])
+        pend_tasks_data.append(
+                          {
+                           'title':name,
+                           'start':sub_date.strftime("%Y-%m-%d"),
+                           'end':sub_date.strftime("%Y-%m-%d"),
+                           'url': link
+                           }
+                          )
+        pend_tasks_dump = simplejson.dumps(pend_tasks_data)
+    return custom_render(request,{'page_title':page_title,'pend_tasks_dump':pend_tasks_dump},template_name)
 
 def get_form_data(request):
     return request.POST if request.method == 'POST' else None
@@ -150,7 +170,7 @@ def edit_task(request,id,template_name,page_title):
         task.status = task_status
         #if newcourse diff from oldcourse,then check if user has other tasks for the oldcourse,else remove user from students
         if course!=oldcourse:
-            print 'different course set for task:',task
+            #print 'different course set for task:',task
             usertasks_for_oldcourse = oldcourse.task_set.filter(author=request.user)
             if usertasks_for_oldcourse.count()==1:
                 oldcourse.students.remove(request.user)
@@ -213,7 +233,7 @@ def get_pending_tasks(user):
     pending_tasks = cache.get(key) if cache.has_key(key) else None
     if not pending_tasks:
         pending_tasks = Task.objects.filter(author=user,status=PENDING)
-        print 'DBQUERY:pending tasks got from db'
+        #print 'DBQUERY:pending tasks got from db'
         cache.set(key,pending_tasks)
     return pending_tasks
 
@@ -223,7 +243,7 @@ def get_finished_tasks(user):
     finished_tasks = cache.get(key) if cache.has_key(key) else None
     if not finished_tasks:
         finished_tasks = Task.objects.filter(author=user,status=FINISHED).order_by('-closed_date')
-        print 'DBQUERY:finished tasks got from db'
+        #print 'DBQUERY:finished tasks got from db'
         cache.set(key,finished_tasks)
     return finished_tasks
     
@@ -294,10 +314,10 @@ def delete_course(request,id):
     #remove user from course's students
     #course.students.remove(request.user)
     #if course.students empty, delete course
-    print 'course.students.count()=',course.students.count()
+    #print 'course.students.count()=',course.students.count()
     if course.students.count() == 0:
         course.delete()
-        print 'deleted course'
+        #print 'deleted course'
     return redirect('courses')
 
 

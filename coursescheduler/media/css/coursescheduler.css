@@ -6,11 +6,18 @@ body{
 }
 
 #content{
-	border-style:outset;
-	border-color:white;
+	
+	
 	
 }
-
+.welcome-message{
+	color:#7b7575;
+	float:right;
+}
+p.mainlinks{
+	
+	margin:8%;
+}
 h3{
 	font: italic normal 1.4em georgia, sans-serif;
 	letter-spacing: 1px; 
@@ -102,7 +109,9 @@ textarea {
 }
 
 div.footer{
-	text-align:left;
+	clear : both;
+	text-align:center;
+	margin-top: 7%;
 }
 
 .page_heading {
@@ -180,4 +189,39 @@ div.clearflt{
 }
 ul.errorlist{
 	color: red;
+}
+
+div#links{
+	
+	margin-left:0;
+	width : 50%;
+	
+}
+
+/* calendar */
+div#calendarspace{
+    width:50%;
+    float:right;
+    margin-top:5%;
+    margin-bottom:2%;
+    margin-right:10%;
+    background: -webkit-gradient(linear, 0% 0%, 0% 50%, from(#E3E0D1), to(#b5b4b1));
+    background: -moz-linear-gradient(top, #E3E0D1,#b5b4b1  50%);
+    box-shadow:0px -5px 300px #7e7c78;
+    border-radius: 10px;
+}
+/* override calendar widget style */
+div.fc-event-skin{
+    border-color:  #e46543;
+    background-color: #b5b4b1;
+    color: #950f04;
+    font-weight:bold;
+}
+.fc-header-title,.fc-widget-header{
+    color:#950f04;
+}
+
+.fc-event-title{
+    color:white;
+    font-size:1.5em;
 }
