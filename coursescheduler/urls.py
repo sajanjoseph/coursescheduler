@@ -81,6 +81,13 @@ urlpatterns=patterns('',
          'page_title':'Closed Tasks'
        },
       name='closed_tasks'),
+                     
+    url(r'^tasksofgap/$','coursescheduler.views.closed_tasks_of_interval',
+      {
+         'template_name':'scheduler/closed_tasks.html',
+         'page_title':'Closed Tasks of Interval'
+       },
+      name='closed_tasks_of_gap'),
   
   )
 

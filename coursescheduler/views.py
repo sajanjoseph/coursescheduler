@@ -9,6 +9,7 @@ from coursescheduler.forms import TaskForm,TaskStatusForm,CompletionIntervalForm
 from django.contrib.auth.views import logout_then_login
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from django.db.models import F
 import datetime
 import simplejson;
 from django.core.urlresolvers import reverse
@@ -260,10 +261,43 @@ def closed_tasks(request,template_name,page_title):
     form_data = get_form_data(request)
     closed_tasks = get_finished_tasks(request.user)
     completionIntervalForm = CompletionIntervalForm()
-    print completionIntervalForm
+    #print completionIntervalForm
     context={'page_title':page_title,'closed_tasks':closed_tasks,'completionIntervalForm':completionIntervalForm}
     return custom_render(request,context,template_name)
-       
+
+@login_required
+def closed_tasks_of_interval(request,template_name,page_title):
+    form_data = get_form_data(request)
+    completionIntervalForm = CompletionIntervalForm(form_data)
+    days = 1
+    if request.method=='POST' and completionIntervalForm.is_valid():
+        days = completionIntervalForm.cleaned_data['intervaloption']
+    print 'days=',days
+    days = int(days)
+    closed_tasks = get_finished_tasks_of_interval(request.user,days)
+    
+    #print completionIntervalForm
+    context={'page_title':page_title,'closed_tasks':closed_tasks,'completionIntervalForm':completionIntervalForm}
+    return custom_render(request,context,template_name)
+
+def get_finished_tasks_of_interval(user,days):
+    #key = key_function([user.username],'finished-tasks-gap')
+    #finished_tasks = cache.get(key) if cache.has_key(key) else None
+    #get all tasks that have a finished status and a diff btw creation_date and closed_date >= days
+    
+#    if not finished_tasks:
+#        finished_tasks = Task.objects.filter(author=user,status=FINISHED,closed_date__gt=F('creation_date') + datetime.timedelta(days=days)).order_by('-closed_date')
+#        #print 'DBQUERY:finished tasks got from db'
+#        print 'finished_tasks=',finished_tasks
+#        cache.set(key,finished_tasks)
+    finished_tasks = Task.objects.filter(author=user,status=FINISHED,closed_date__gt=F('creation_date') + datetime.timedelta(days=days)).order_by('-closed_date')
+    print 'get_finished_tasks_of_interval=',finished_tasks
+    return finished_tasks
+
+def duration_in_days(creation_date,closed_datetime):
+    closed_date = datetime.date(closed_datetime.year,closed_datetime.month,closed_datetime.day)
+    return (closed_date - creation_date).days
+
 @login_required
 def create_course(request,template_name,page_title):
     form_data = get_form_data(request)

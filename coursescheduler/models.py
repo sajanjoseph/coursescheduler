@@ -29,7 +29,7 @@ status_values = (
 class Task(models.Model):
     course = models.ForeignKey(Course)
     name = models.CharField(max_length=200)
-    creation_date = models.DateField(default=datetime.date.today)
+    creation_date = models.DateTimeField(default=datetime.datetime.now)
     submission_date = models.DateTimeField(default=lambda:datetime.datetime.now()+datetime.timedelta(days=1))#making this django.utils.timezone.now() causes error even with USE_TZ=True
     author = models.ForeignKey(User)
     status = models.CharField(max_length = 4,choices=status_values ,default = PENDING)
