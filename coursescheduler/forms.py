@@ -46,17 +46,11 @@ class CourseChoicesForm(forms.Form):
         #self.courseoption = forms.ModelChoiceField(queryset=Course.objects.filter(creator=self.creator),required=False,label='Course')
         self.fields['courseoption'].queryset = Course.objects.filter(creator=self.creator)
         print "self.fields['courseoption'].queryset:after=",self.fields['courseoption'].queryset
-    
-#class CourseChoicesForm(forms.Form):
-#    courseoption = forms.ChoiceField(choices=[],required=False,label='Course')
-#    def __init__(self, *args, **kwargs):
-#        super(CourseChoicesForm, self).__init__(*args, **kwargs)
-#        self.fields['courseoption'].choices = [(x.id,x.title) for x in Course.objects.all()]
 
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        exclude = ('author','course','status','closed_date')
+        exclude = ('author','course','status','closed_date','creation_date')
     def clean_expected_duration(self):
         exp_dur = self.cleaned_data['expected_duration']
         if exp_dur <0:
