@@ -23,23 +23,29 @@ var M_URL = "{{MEDIA_URL}}";
 
 </head>
 <body {% block load_js %}{% endblock %}>
-<div id="logo"> <img src="{{ MEDIA_URL }}img/ch2.png" HEIGHT="118" WIDTH="118">
-<span class="logo">Course Scheduler</span>
-</div>
+<div class="headerdiv">
 
+	<div id="logo"> <img src="{{ MEDIA_URL }}img/ch2.png" HEIGHT="118" WIDTH="118">
+	<span class="logo">Course Scheduler</span>
+    </div>
+    
+       <span class = "welcome-message">
+           {% if user.is_authenticated %}
+              logged in as {{user.username}}
+              <form id="logoutform" method="post" action="{% url coursescheduler_logout %}">{% csrf_token %}
+                <input type="hidden" name="next" value="{{next|escape}}" />
+                <input type="hidden" name="confirm" value="true" />
+                <input type="submit" value="Logout" class="submit"/>
+            </form>
+           {% endif %}
+       </span>
+    
+</div>
+<br class="clearflt">
 
 <div id="content">
    {% block content %}
-   <div class = "welcome-message">
-   {% if user.is_authenticated %}
-      logged in as {{user.username}}
-      <form id="logoutform" method="post" action="{% url coursescheduler_logout %}">{% csrf_token %}
-	   	<input type="hidden" name="next" value="{{next|escape}}" />
-	    <input type="hidden" name="confirm" value="true" />
-	    <input type="submit" value="Logout" class="submit"/>
-	</form>
-   {% endif %}
-   </div>
+   
       {% endblock %}
 </div>
 

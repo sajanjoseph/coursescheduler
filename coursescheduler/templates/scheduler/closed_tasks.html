@@ -5,6 +5,19 @@
 {{block.super }}
 
 {% if closed_tasks %}
+<div class="days_to_complete">
+    <form name="days_to_complete_form" method="POST" action="/tasksofgap/">{% csrf_token %}
+        <span id="ciform">
+        {{completionIntervalForm.as_p}}
+        </span>
+        <p id="citaskssubmit"> 
+	       <input type="submit" class="submit small" value="Find Tasks"/>
+	   </p>
+	   
+    </form>
+
+</div>
+
 <h3>finished {{closed_tasks|length}} task{{closed_tasks|length|pluralize:",s"}}</h3>
 <div class="finished">
 <ul>

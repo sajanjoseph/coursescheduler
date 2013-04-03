@@ -68,3 +68,13 @@ class TaskStatusForm(forms.Form):
     def __init__(self,*args,**kwargs):
         super(TaskStatusForm,self).__init__(*args,**kwargs)
         self.fields['statusoption'].choices=[(x,y) for (x,y) in status_values]
+
+class CompletionIntervalForm(forms.Form):
+    intervaloption = forms.ChoiceField(choices = [(str(x),x) for x in range(1,100)],label='Days taken to Finish Task')
+    
+ 
+#class CompletionIntervalForm(forms.Form):
+#    intervaloption = forms.ChoiceField(choices = [(str(x),x) for x in range(1,100)],label='Days taken')
+#    def __init__(self,*args,**kwargs):
+#        super(CompletionIntervalForm,self).__init__(*args,**kwargs)
+#        self.fields['intervaloption'].choices=[(str(x),x) for x in range(1,100)]

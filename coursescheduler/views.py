@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response,get_object_or_404,redirect
 from django.http import HttpResponse
 from coursescheduler.models import Course,Task
 from coursescheduler.forms import CourseTitleForm,CourseForm,EditCourseForm,CourseChoicesForm
-from coursescheduler.forms import TaskForm,TaskStatusForm
+from coursescheduler.forms import TaskForm,TaskStatusForm,CompletionIntervalForm
 from django.contrib.auth.views import logout_then_login
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
@@ -259,7 +259,9 @@ def pending_tasks(request,template_name,page_title):
 def closed_tasks(request,template_name,page_title):
     form_data = get_form_data(request)
     closed_tasks = get_finished_tasks(request.user)
-    context={'page_title':page_title,'closed_tasks':closed_tasks}
+    completionIntervalForm = CompletionIntervalForm()
+    print completionIntervalForm
+    context={'page_title':page_title,'closed_tasks':closed_tasks,'completionIntervalForm':completionIntervalForm}
     return custom_render(request,context,template_name)
        
 @login_required

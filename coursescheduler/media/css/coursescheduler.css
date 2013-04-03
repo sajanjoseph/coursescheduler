@@ -5,9 +5,18 @@ body{
     background-color:#E3E0D1;
 }
 
+div#logo{
+    
+    float:left;
+}
+
 #content{
 	
 	
+	
+}
+
+#logoutform{
 	
 }
 .welcome-message{
@@ -73,7 +82,7 @@ form.create{
 
 input    {
 	width:375px;
-	display:block;
+	display:inline;
 	border: 1px solid #999;
 	height: 25px;
 	-webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
@@ -99,6 +108,9 @@ input.submit {
 	-moz-border-radius: 15px;
 	border-radius: 15px;
 	border: 1p solid #999;
+}
+input.small{
+	width:100px;
 }
 input.submit:hover {
 	background:#fff;
@@ -149,6 +161,21 @@ div.finished{
 	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
 }
 
+span#ciform{
+	color:#0099CC;
+	
+}
+
+p#citaskssubmit{
+	
+	display :inline;
+}
+
+div.days_to_complete{
+	
+	width:300px;
+}
+
 div.oldtask{
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FF8585), to(#848484));
 	background: -moz-linear-gradient(bottom, #848484, #FF8585 175px);
@@ -184,7 +211,7 @@ span.logo{
 	
 .task_details_div dd { float:left; }
 
-div.clearflt{
+.clearflt{
 	clear:both;
 }
 ul.errorlist{
